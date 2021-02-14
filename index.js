@@ -1,12 +1,12 @@
 const Koa = require('koa');
 const body = require('koa-bodyparser');
-const Router = require('koa-router');
+const cors = require('koa2-cors');
+const routes = require('./routes');
 
 const app = new Koa();
-const router = new Router();
 
-app.use(async ctx => {
-  ctx.body = 'Hello World';
-});
+app.use(cors());
+app.use(body());
+app.use(routes.routes()).use(routes.allowedMethods());
 
-app.listen(3000);
+app.listen(3000, console.log('Server start at port 3000'));
